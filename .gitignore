@@ -1,0 +1,10 @@
+# Fichiers compilés Java
+*.class
+
+# Dossier de compilation Maven
+target/
+
+# Fichiers propres à l'IDE
+.idea/
+.vscode/
+*.iml
