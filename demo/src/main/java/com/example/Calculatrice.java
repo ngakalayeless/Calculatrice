@@ -53,11 +53,12 @@ public class Calculatrice {
             throw new IllegalStateException("Pas assez d'éléments pour division");
         }
         double a = pile.depiler();
-        double b = pile.depiler();
         if (a == 0) {
             throw new ArithmeticException("Division par zéro");
         }
+        double b = pile.depiler();  
         pile.empiler(b / a);
+        
     }
     public void opposite() {
         if (pile.estVide()) {
@@ -66,5 +67,9 @@ public class Calculatrice {
         double a = pile.depiler();
         pile.empiler(-a);
     }
+    public double[] contenuPile() {
+        return pile.contenu();
+    }
+    
 
 }

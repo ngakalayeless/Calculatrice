@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import java.awt.event.ActionListener;
 
 public class VueCalculette extends JFrame {
 
@@ -38,13 +39,14 @@ public class VueCalculette extends JFrame {
 
         // Boutons (centre)
         String[] libelles = {
+            "pop", "<","+/-", "clear",
             "7", "8", "9", "/",
             "4", "5", "6", "*",
             "1", "2", "3", "-",
             "0", ".", "push", "+"
         };
 
-        JPanel panelBoutons = new JPanel(new GridLayout(4, 4, 5, 5));
+        JPanel panelBoutons = new JPanel(new GridLayout(5, 4, 0, 0));
         for (String libelle : libelles) {
             JButton bouton = new JButton(libelle);
             boutons.add(bouton);
@@ -59,5 +61,10 @@ public class VueCalculette extends JFrame {
             VueCalculette fenetre = new VueCalculette();
             fenetre.setVisible(true);
         });
+    }
+    public void ajouterEcouteur(ActionListener ecouteur) {
+        for (JButton bouton : boutons) {
+            bouton.addActionListener(ecouteur);
+        }
     }
 }
