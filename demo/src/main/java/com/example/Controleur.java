@@ -5,147 +5,129 @@ public class Controleur {
     private Calculatrice calculatrice;
     private VueCalculette fenetre;
     private StringBuilder saisie = new StringBuilder();
-    //Méthode du controleur
-    private void push() {
-        if (saisie.length() > 0) {
-            double valeur = Double.parseDouble(saisie.toString());
-            calculatrice.entrer(valeur);
-            saisie.setLength(0);
-            fenetre.activerBouton(".", true);
-        }
-    }
+
     // Constructeur du contrôleur
     public Controleur(Calculatrice calculatrice, VueCalculette fenetre) {
         this.calculatrice = calculatrice;
         this.fenetre = fenetre;
-        fenetre.activerBouton("+", false);
-        fenetre.activerBouton("-",false );
-        fenetre.activerBouton("*", false);
-        fenetre.activerBouton("/", false);
-        fenetre.activerBouton("+/-", false);
-        fenetre.activerBouton("pop", false);
+
         // écouteurs d'événements pour les boutons de la vue
         fenetre.ajouterEcouteur(e -> {
             String touche = e.getActionCommand();
 
             if (touche.matches("[0-9]")) {
-                    saisie.append(touche);
-                }
-                
-                else {
-                    switch (touche) {
+                saisie.append(touche);
+            } else {
+                switch (touche) {
 
-                        case "clear":
-                            calculatrice.clear();
-                            saisie.setLength(0);
-                            fenetre.activerBouton(".", true);
-                            break;
+                    case "clear":
+                        calculatrice.clear();
+                        saisie.setLength(0);
+                        break;
 
-
-                        case ".":
-                            if (saisie.indexOf(".") == -1){
-                                if (saisie.length() == 0) {
-                                    saisie.append("0.");
-                                } else {
-                                    saisie.append(".");
-                                }
-                                fenetre.activerBouton(".",false);
+                    case ".":
+                        if (saisie.indexOf(".") == -1) {
+                            if (saisie.length() == 0) {
+                                saisie.append("0.");
+                            } else {
+                                saisie.append(".");
                             }
-                            break;
-                        case "push":
-                            push();
-                            break;
-
-                        case "pop":
-                            calculatrice.supprimer();
-                            break;
-
-                        case "<":
-                            if (saisie.length() > 0) {
-                                if (saisie.charAt(saisie.length() - 1) == '.') {
-                                    fenetre.activerBouton(".", true);
-                                }
-                                saisie.deleteCharAt(saisie.length() - 1);
-                                if (saisie.length() == 1 && saisie.charAt(0) == '-') {
-                                    saisie.setLength(0);
-                                }
-                            }
-                            break;
-
-                        case "+/-":
-                            if (saisie.length()== 0) {
-                                calculatrice.opposite();}
-                            else {
-                                if (saisie.charAt(0) == '-') {
-                                    saisie.deleteCharAt(0);
-                                } else {
-                                    saisie.insert(0, '-');
-                                }
-                            }
-                            break;
-
-                        case "+":
-                            push();
-                            calculatrice.add();
-                            break;
-                        case "-":
-                            push();
-                            calculatrice.subtract();
-                            break;
-                        case "*":
-                            push();
-                            calculatrice.multiply();
-                            break;
-                        case "/":
-                            push();
-                            calculatrice.divide();
-                            break;
-                    }
-                }
-                if (calculatrice.contenuPile().length >= 2) {
-                    fenetre.activerBouton("+", true);
-                    fenetre.activerBouton("-", true);
-                    fenetre.activerBouton("*", true);
-                    if (calculatrice.tete() != 0) {
-                        fenetre.activerBouton("/", true);
-                    } else {
-                        fenetre.activerBouton("/", false);
-                    }
-                } else {
-                    fenetre.activerBouton("+", false);
-                    fenetre.activerBouton("-", false);
-                    fenetre.activerBouton("*", false);
-                    fenetre.activerBouton("/", false);
-                }
-                if (calculatrice.contenuPile().length > 0) {
-                    fenetre.activerBouton("+/-", true);
-                    fenetre.activerBouton("pop", true);
-                    if (saisie.length() >0) {
-                        fenetre.activerBouton("+", true);
-                        fenetre.activerBouton("-", true);
-                        fenetre.activerBouton("*", true);
-                        if (Double.parseDouble(saisie.toString())==0) {
-                            fenetre.activerBouton("/", false);
-                        } else {
-                            fenetre.activerBouton("/", true);
                         }
-                    }
-                } else {
-                    fenetre.activerBouton("+/-", false);
-                    fenetre.activerBouton("pop", false);
-                }
-                if (calculatrice.contenuPile().length >=9) { //désactive push avant d'arriver au bout de la pile en laissant une case libre pour pouvoir effectuer des opérations
-                    fenetre.activerBouton("push", false);
-                } else {
-                    fenetre.activerBouton("push", true);
-                }
-                if (saisie.length()>0) {
-                    fenetre.activerBouton("+/-",true);
-                }
-                fenetre.rafraichir(calculatrice.contenuPile(), saisie.toString());
-            });
+                        break;
 
+                    case "push":
+                        push();
+                        break;
 
-        };
+                    case "pop":
+                        calculatrice.supprimer();
+                        break;
+
+                    case "<":
+                        if (saisie.length() > 0) {
+                            saisie.deleteCharAt(saisie.length() - 1);
+                            if (saisie.length() == 1 && saisie.charAt(0) == '-') {
+                                saisie.setLength(0);
+                            }
+                        }
+                        break;
+
+                    case "+/-":
+                        if (saisie.length() == 0) {
+                            calculatrice.opposite();
+                        } else if (saisie.charAt(0) == '-') {
+                            saisie.deleteCharAt(0);
+                        } else {
+                            saisie.insert(0, '-');
+                        }
+                        break;
+
+                    case "+":
+                        push();
+                        calculatrice.add();
+                        break;
+                    case "-":
+                        push();
+                        calculatrice.subtract();
+                        break;
+                    case "*":
+                        push();
+                        calculatrice.multiply();
+                        break;
+                    case "/":
+                        push();
+                        calculatrice.divide();
+                        break;
+                }
+            }
+
+            mettreAJourBoutons();
+            fenetre.rafraichir(calculatrice.contenuPile(), saisie.toString());
+        });
+
+        // État des boutons au démarrage (pile et saisie vides)
+        mettreAJourBoutons();
     }
 
+    // Empile la saisie en cours, si elle n'est pas vide
+    private void push() {
+        if (saisie.length() > 0) {
+            double valeur = Double.parseDouble(saisie.toString());
+            calculatrice.entrer(valeur);
+            saisie.setLength(0);
+        }
+    }
+
+    // Recalcule l'état de tous les boutons à partir de la pile et de la saisie.
+    // Chaque bouton est réglé une seule fois : l'ordre des lignes n'a pas d'importance.
+    private void mettreAJourBoutons() {
+        int taillePile = calculatrice.contenuPile().length;
+        boolean saisieEnCours = saisie.length() > 0;
+
+        // Nombre de valeurs utilisables par un opérateur : la saisie compte pour une,
+        // puisqu'elle est empilée automatiquement avant le calcul.
+        int nbValeurs = taillePile + (saisieEnCours ? 1 : 0);
+        boolean assezDeValeurs = nbValeurs >= 2;
+
+        // Le diviseur est le nombre saisi s'il y en a un, sinon le sommet de la pile.
+        // Le sommet n'est lu que si la pile a au moins 2 éléments, donc jamais sur une pile vide.
+        boolean diviseurNul = false;
+        if (assezDeValeurs) {
+            double diviseur = saisieEnCours ? Double.parseDouble(saisie.toString()) : calculatrice.tete();
+            diviseurNul = diviseur == 0;
+        }
+
+        fenetre.activerBouton("+", assezDeValeurs);
+        fenetre.activerBouton("-", assezDeValeurs);
+        fenetre.activerBouton("*", assezDeValeurs);
+        fenetre.activerBouton("/", assezDeValeurs && !diviseurNul);
+
+        fenetre.activerBouton("pop", taillePile > 0);
+        fenetre.activerBouton("+/-", taillePile > 0 || saisieEnCours);
+        fenetre.activerBouton(".", saisie.indexOf(".") == -1);
+
+        // Désactive push avant d'arriver au bout de la pile (10 cases), en laissant
+        // une case libre pour que les opérateurs puissent empiler la saisie.
+        fenetre.activerBouton("push", taillePile < 9);
+    }
+}
