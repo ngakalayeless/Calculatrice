@@ -42,7 +42,7 @@ public class Pile {
         taille = 0;
     }
     public double[] contenu() {
-    return Arrays.copyOf(elements, taille);
-}
+        return Arrays.copyOf(elements, taille);
+    }
 }
 

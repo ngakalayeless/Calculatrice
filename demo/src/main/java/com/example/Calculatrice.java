@@ -1,6 +1,6 @@
 package com.example;
 
-public class Calculatrice {
+public class Calculatrice{
     private final Pile pile = new Pile();
 
     public void entrer (double valeur) {
@@ -70,6 +70,8 @@ public class Calculatrice {
     public double[] contenuPile() {
         return pile.contenu();
     }
-    
+    public double tete() {
+        return pile.sommet();
+    }
 
 }
