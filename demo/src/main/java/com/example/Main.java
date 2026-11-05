@@ -1,11 +1,20 @@
 package com.example;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            // Style Nimbus, à choisir avant de créer la fenêtre.
+            // S'il est indisponible, Swing garde son style par défaut.
+            try {
+                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            } catch (Exception e) {
+                System.err.println("Nimbus indisponible, style par défaut utilisé : " + e);
+            }
+
             VueCalculette fenetre = new VueCalculette();
 
             Calculatrice calculatrice = new Calculatrice();

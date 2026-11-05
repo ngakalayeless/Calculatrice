@@ -106,7 +106,9 @@ public class Controleur {
 
         // Nombre de valeurs utilisables par un opérateur : la saisie compte pour une,
         // puisqu'elle est empilée automatiquement avant le calcul.
-        int nbValeurs = taillePile + (saisieEnCours ? 1 : 0);
+        int nbValeurs = taillePile;
+        if (saisieEnCours) {
+            nbValeurs++;}
         boolean assezDeValeurs = nbValeurs >= 2;
 
         // Le diviseur est le nombre saisi s'il y en a un, sinon le sommet de la pile.
