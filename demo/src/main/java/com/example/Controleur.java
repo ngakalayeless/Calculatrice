@@ -5,7 +5,15 @@ public class Controleur {
     private Calculatrice calculatrice;
     private VueCalculette fenetre;
     private StringBuilder saisie = new StringBuilder();
-
+    //Méthode du controleur
+    private void push() {
+        if (saisie.length() > 0) {
+            double valeur = Double.parseDouble(saisie.toString());
+            calculatrice.entrer(valeur);
+            saisie.setLength(0);
+            fenetre.activerBouton(".", true);
+        }
+    }
     // Constructeur du contrôleur
     public Controleur(Calculatrice calculatrice, VueCalculette fenetre) {
         this.calculatrice = calculatrice;
@@ -43,12 +51,7 @@ public class Controleur {
                             }
                             break;
                         case "push":
-                            if (saisie.length() > 0) {
-                                double valeur = Double.parseDouble(saisie.toString()); //Convertit le texte en décimal
-                                calculatrice.entrer(valeur); //empile la valeur dans la pile
-                                saisie.setLength(0); // Effacer la saisie après l'entrée
-                                fenetre.activerBouton(".", true);
-                            }
+                            push();
                             break;
 
                         case "pop":
@@ -69,25 +72,22 @@ public class Controleur {
                             break;
 
                         case "+":
+                            push();
                             calculatrice.add();
                             break;
                         case "-":
+                            push();
                             calculatrice.subtract();
                             break;
                         case "*":
+                            push();
                             calculatrice.multiply();
                             break;
                         case "/":
+                            push();
                             calculatrice.divide();
                             break;
                     }
-                }
-                if (calculatrice.contenuPile().length > 0) {
-                    fenetre.activerBouton("+/-", true);
-                    fenetre.activerBouton("pop", true);
-                } else {
-                    fenetre.activerBouton("+/-", false);
-                    fenetre.activerBouton("pop", false);
                 }
                 if (calculatrice.contenuPile().length >= 2) {
                     fenetre.activerBouton("+", true);
@@ -103,6 +103,23 @@ public class Controleur {
                     fenetre.activerBouton("-", false);
                     fenetre.activerBouton("*", false);
                     fenetre.activerBouton("/", false);
+                }
+                if (calculatrice.contenuPile().length > 0) {
+                    fenetre.activerBouton("+/-", true);
+                    fenetre.activerBouton("pop", true);
+                    if (saisie.length() >0) {
+                        fenetre.activerBouton("+", true);
+                        fenetre.activerBouton("-", true);
+                        fenetre.activerBouton("*", true);
+                        if (Double.parseDouble(saisie.toString())==0) {
+                            fenetre.activerBouton("/", false);
+                        } else {
+                            fenetre.activerBouton("/", true);
+                        }
+                    }
+                } else {
+                    fenetre.activerBouton("+/-", false);
+                    fenetre.activerBouton("pop", false);
                 }
                 fenetre.rafraichir(calculatrice.contenuPile(), saisie.toString());
             });
