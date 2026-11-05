@@ -9,7 +9,10 @@ public class Pile {
 
     public void empiler(double valeur) {
         if (taille == elements.length) {
-            elements = Arrays.copyOf(elements, elements.length * 2);  // agrandissement
+            throw new IllegalStateException("Pile pleine");
+        }
+        if (valeur == 0) {
+            valeur = 0.0; // Convertit -0.0 en 0.0
         }
         elements[taille] = valeur;
         taille++;

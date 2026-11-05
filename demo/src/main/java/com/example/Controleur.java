@@ -37,6 +37,8 @@ public class Controleur {
 
                         case "clear":
                             calculatrice.clear();
+                            saisie.setLength(0);
+                            fenetre.activerBouton(".", true);
                             break;
 
 
@@ -64,11 +66,22 @@ public class Controleur {
                                     fenetre.activerBouton(".", true);
                                 }
                                 saisie.deleteCharAt(saisie.length() - 1);
+                                if (saisie.length() == 1 && saisie.charAt(0) == '-') {
+                                    saisie.setLength(0);
+                                }
                             }
                             break;
 
                         case "+/-":
-                            calculatrice.opposite();
+                            if (saisie.length()== 0) {
+                                calculatrice.opposite();}
+                            else {
+                                if (saisie.charAt(0) == '-') {
+                                    saisie.deleteCharAt(0);
+                                } else {
+                                    saisie.insert(0, '-');
+                                }
+                            }
                             break;
 
                         case "+":
@@ -120,6 +133,14 @@ public class Controleur {
                 } else {
                     fenetre.activerBouton("+/-", false);
                     fenetre.activerBouton("pop", false);
+                }
+                if (calculatrice.contenuPile().length >=9) { //désactive push avant d'arriver au bout de la pile en laissant une case libre pour pouvoir effectuer des opérations
+                    fenetre.activerBouton("push", false);
+                } else {
+                    fenetre.activerBouton("push", true);
+                }
+                if (saisie.length()>0) {
+                    fenetre.activerBouton("+/-",true);
                 }
                 fenetre.rafraichir(calculatrice.contenuPile(), saisie.toString());
             });
