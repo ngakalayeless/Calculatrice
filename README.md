@@ -10,7 +10,7 @@ L'interface graphique a été développée avec Java Swing.
 
 ## Fonctionnalités
 
-Les fonctionnalités intégrées sont la saisie des nombres entiers et décimaux, les opérations basiques (addition, soustraction, multiplication, division), pop (retirer un nombre de la pile), swap (échanger les deux éléments au sommet de la pile), clear ou C (effacer la valeur courante), push (ajouter un nombre à la pile) +/- (changer le signe d'un nombre), Backspace ou < (supprimer le dernier caractère saisi), affichage des 10 derniers nombre de la pile, agrandissement automatique de la capacité de la pile.
+Les fonctionnalités intégrées sont la saisie des nombres entiers et décimaux, les opérations basiques (addition, soustraction, multiplication, division), pop (retirer un nombre de la pile), swap (échanger les deux éléments au sommet de la pile), clear ou C (effacer la valeur courante et libérer la pile), push (ajouter un nombre à la pile) +/- (changer le signe d'un nombre), Backspace ou < (supprimer le dernier caractère saisi), affichage des 10 derniers nombre de la pile, agrandissement automatique de la capacité de la pile.
 
 
 ## Adaptation du cachier des charges

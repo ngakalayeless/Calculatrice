@@ -1,17 +1,15 @@
 package com.example;
 
 public class Controleur {
-    // Attributs du contrôleur
     private Calculatrice calculatrice;
     private VueCalculette fenetre;
     private StringBuilder saisie = new StringBuilder();
 
-    // Constructeur du contrôleur
     public Controleur(Calculatrice calculatrice, VueCalculette fenetre) {
         this.calculatrice = calculatrice;
         this.fenetre = fenetre;
 
-        // écouteurs d'événements pour les boutons de la vue
+        // Traitement des clics sur les boutons de la vue
         fenetre.ajouterEcouteur(e -> {
             String touche = e.getActionCommand();
 
@@ -103,21 +101,18 @@ public class Controleur {
         }
     }
 
-    // Recalcule l'état de tous les boutons à partir de la pile et de la saisie.
-    // Chaque bouton est réglé une seule fois : l'ordre des lignes n'a pas d'importance.
+    // Active ou grise chaque bouton selon l'état de la pile et de la saisie
     private void mettreAJourBoutons() {
         int taillePile = calculatrice.contenuPile().length;
         boolean saisieEnCours = saisie.length() > 0;
 
-        // Nombre de valeurs utilisables par un opérateur : la saisie compte pour une,
-        // puisqu'elle est empilée automatiquement avant le calcul.
+        // La saisie en cours compte comme une valeur, car elle est empilée avant le calcul
         int nbValeurs = taillePile;
         if (saisieEnCours) {
             nbValeurs++;}
         boolean assezDeValeurs = nbValeurs >= 2;
 
-        // Le diviseur est le nombre saisi s'il y en a un, sinon le sommet de la pile.
-        // Le sommet n'est lu que si la pile a au moins 2 éléments, donc jamais sur une pile vide.
+        // Le diviseur est la saisie s'il y en a une, sinon le sommet de la pile
         boolean diviseurNul = false;
         if (assezDeValeurs) {
             double diviseur = saisieEnCours ? Double.parseDouble(saisie.toString()) : calculatrice.tete();
@@ -134,7 +129,6 @@ public class Controleur {
         fenetre.activerBouton(".", saisie.indexOf(".") == -1);
         fenetre.activerBouton("swap", taillePile >= 2);
 
-        // Active push uniquement lorsqu'un nombre est en cours de saisie
         fenetre.activerBouton("push", saisieEnCours);
     }
 }
