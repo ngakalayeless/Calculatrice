@@ -128,7 +128,7 @@ public class VueCalculette extends JFrame {
         // de gauche à droite, puis de haut en bas. La disposition sur plusieurs lignes
         // ne sert qu'à la lisibilité : pour Java, c'est un tableau simple de 20 chaînes.
         String[] libelles = {
-            "pop", "<","+/-", "clear",
+            "pop", "swap", "+/-", "actions",
             "7", "8", "9", "/",
             "4", "5", "6", "*",
             "1", "2", "3", "-",
@@ -140,11 +140,36 @@ public class VueCalculette extends JFrame {
         JPanel panelBoutons = new JPanel(new GridLayout(5, 4, 0, 0));
 
         // Boucle "for-each" : pour chaque chaîne du tableau, on crée le bouton correspondant.
+        
         for (String libelle : libelles) {
-            JButton bouton = new JButton(libelle);   // Crée le bouton avec son texte
-            boutons.add(bouton);                     // Le mémorise, pour ajouterEcouteur()
-            panelBoutons.add(bouton);                // Le place à l'écran, dans la case suivante
+
+            if (libelle.equals("actions")) {
+
+                // Un panneau contenant deux boutons côte à côte
+                JPanel panelActions = new JPanel(new GridLayout(1, 2, 2, 0));
+
+                JButton boutonRetour = new JButton("<");
+                JButton boutonClear = new JButton("C");
+
+                // Enregistrer les boutons pour les événements
+                boutons.add(boutonRetour);
+                boutons.add(boutonClear);
+
+                panelActions.add(boutonRetour);
+                panelActions.add(boutonClear);
+
+                // Le panneau occupe une seule cellule de la grille principale
+                panelBoutons.add(panelActions);
+
+            } else {
+
+                JButton bouton = new JButton(libelle);
+
+                boutons.add(bouton);
+                panelBoutons.add(bouton);
+            }
         }
+
         // La variable "bouton" disparaît à chaque tour de boucle, mais pas le bouton lui-même :
         // la liste et le panneau gardent chacun une référence vers le même objet.
 

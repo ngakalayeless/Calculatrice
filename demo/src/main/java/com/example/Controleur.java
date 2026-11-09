@@ -20,7 +20,7 @@ public class Controleur {
             } else {
                 switch (touche) {
 
-                    case "clear":
+                    case "C":
                         calculatrice.clear();
                         saisie.setLength(0);
                         break;
@@ -41,6 +41,10 @@ public class Controleur {
 
                     case "pop":
                         calculatrice.supprimer();
+                        break;
+
+                    case "swap":
+                        calculatrice.swap();
                         break;
 
                     case "<":
@@ -128,6 +132,7 @@ public class Controleur {
         fenetre.activerBouton("pop", taillePile > 0);
         fenetre.activerBouton("+/-", taillePile > 0 || saisieEnCours);
         fenetre.activerBouton(".", saisie.indexOf(".") == -1);
+        fenetre.activerBouton("swap", taillePile >= 2);
 
         // Active push uniquement lorsqu'un nombre est en cours de saisie
         fenetre.activerBouton("push", saisieEnCours);
