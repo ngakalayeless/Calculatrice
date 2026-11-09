@@ -78,6 +78,7 @@ public class Controleur {
                         push();
                         calculatrice.divide();
                         break;
+                    
                 }
             }
 
@@ -128,8 +129,7 @@ public class Controleur {
         fenetre.activerBouton("+/-", taillePile > 0 || saisieEnCours);
         fenetre.activerBouton(".", saisie.indexOf(".") == -1);
 
-        // Désactive push avant d'arriver au bout de la pile (10 cases), en laissant
-        // une case libre pour que les opérateurs puissent empiler la saisie.
-        fenetre.activerBouton("push", taillePile < 9);
+        // Active push uniquement lorsqu'un nombre est en cours de saisie
+        fenetre.activerBouton("push", saisieEnCours);
     }
 }

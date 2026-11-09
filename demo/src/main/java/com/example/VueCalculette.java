@@ -205,12 +205,17 @@ public class VueCalculette extends JFrame {
     public void rafraichir(double[] pile, String saisie){
         // StringBuilder assemble une chaîne morceau par morceau. C'est plus efficace que des
         // "+" répétés, car une String ne peut pas être modifiée : chaque "+" en créerait une nouvelle.
+        
         StringBuilder sb = new StringBuilder();
-        for (double valeur : pile) {
-            // append() renvoie le StringBuilder lui-même, ce qui permet d'enchaîner les appels.
-            // "\n" est le retour à la ligne. Un double s'écrit toujours avec une décimale : 2 donne "2.0".
-            sb.append(valeur).append("\n");
+
+        // Déterminer à partir de quel nombre afficher la pile
+        int debut = Math.max(0, pile.length - 10);
+
+        // Afficher uniquement les 10 derniers nombres
+        for (int i = debut; i < pile.length; i++) {
+            sb.append(pile[i]).append("\n");
         }
+
         // setText() remplace tout le texte existant : l'ancien contenu n'a pas besoin d'être effacé.
         // Le composant se redessine ensuite automatiquement.
         affichagePile.setText(sb.toString());
